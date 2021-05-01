@@ -1,0 +1,11 @@
+export const bg = "#293241";
+export const add = "#3F8EFC";
+export const sub = "#A7A7A7";
+export const completed = "rgba(56, 176, 0, 0.54)";
+export const canceled = "rgba(255, 90, 95, 0.54)";
+export const red = "#FF5A5F";
+export const orange = "#FF7900";
+export const play = "#377771";
+export const purple = "#A480CF";
+export const blue = "#779BE7";
+export const ligthOrange = "#F27059";

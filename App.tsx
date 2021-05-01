@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
-import { StatusBar } from "expo-status-bar";
 import * as Font from "expo-font";
-import CustomText from "./src/components/CustomText";
+import React, { useEffect, useState } from "react";
+import { Text } from "react-native";
+import Navigation from "./src/navigation";
 
 export default function App() {
     const [fontLoaded, setFontLoaded] = useState(false);
@@ -18,16 +17,9 @@ export default function App() {
         loadFonts();
     }, []);
 
-    return (
-        <>
-            {fontLoaded ? (
-                <View>
-                    <CustomText>Hello World</CustomText>
-                    <StatusBar style="auto" />
-                </View>
-            ) : (
-                <Text>Loading....</Text>
-            )}
-        </>
-    );
+    if (!fontLoaded) {
+        return null;
+    }
+
+    return <Navigation />;
 }
