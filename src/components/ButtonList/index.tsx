@@ -1,27 +1,44 @@
 import React from "react";
-import { blue, ligthOrange, orange, purple } from "../../utils/colors";
+import { blue } from "../../utils/colors";
 // prettier-ignore
 import { ButtonListWrapper, ButtonText, SingleButton} from "./ButtonList.styles";
-import { AntDesign } from "@expo/vector-icons";
+import { Alert } from "react-native";
 
 interface ButtonListProps {
     currentSelected: number;
     handleSelected: (min: number) => any;
+    isPlaying: boolean;
 }
 
 const ButtonList: React.FC<ButtonListProps> = ({
     currentSelected,
     handleSelected,
+    isPlaying,
 }) => {
+    const handleClick = (amount: number) => {
+        Alert.alert(
+            "Your timer is running",
+            "Are you sure you want to change the amount of time? The timer will restart",
+            [
+                {
+                    text: "Cancel",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel",
+                },
+                { text: "OK", onPress: () => handleSelected(amount) },
+            ]
+        );
+    };
+
     return (
         <ButtonListWrapper>
-            <SingleButton bgColor="#FF7900" onPress={() => handleSelected(10)}>
+            <SingleButton bgColor="#FF7900" onPress={() => handleClick(10)}>
                 <ButtonText>10 min</ButtonText>
             </SingleButton>
-            <SingleButton bgColor={blue} onPress={() => handleSelected(20)}>
+            <SingleButton bgColor={blue} onPress={() => handleClick(20)}>
                 <ButtonText>20 min</ButtonText>
             </SingleButton>
-            <SingleButton bgColor="#b69121" onPress={() => handleSelected(30)}>
+            <SingleButton bgColor="#b69121" onPress={() => handleClick(30)}>
                 <ButtonText>30 min</ButtonText>
             </SingleButton>
         </ButtonListWrapper>

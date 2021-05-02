@@ -7,11 +7,13 @@ import { CountdownWrapper, CountdowtTex } from "./Countdown.styles";
 interface CountdownProps {
     minutes: number;
     isPaused: boolean;
+    onEnd: () => any;
 }
 
 const Countdown: React.FC<CountdownProps> = ({
     minutes = 20,
     isPaused = true,
+    onEnd,
 }) => {
     const [millis, setMillis] = useState(minutesToMillis(minutes));
     const [fill, setFill] = useState(100);
@@ -23,6 +25,8 @@ const Countdown: React.FC<CountdownProps> = ({
     const countdown = () => {
         setMillis((time) => {
             if (time === 0) {
+                clearInterval(interval.current);
+                onEnd();
                 return time;
             }
 

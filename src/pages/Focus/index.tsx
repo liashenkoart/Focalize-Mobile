@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { View, Text } from "react-native";
 import { Wrapper } from "../Home/Home.styles";
 import { EvilIcons } from "@expo/vector-icons";
 // prettier-ignore
-import { Back, BackText, FocusTitleWrapper, FocusSubTitle, FocusTitle, SmallText, DetialBottomFocus } from "./Focus.styles";
+import { Back, FocusTitleWrapper, FocusSubTitle, FocusTitle, SmallText, DetialBottomFocus } from "./Focus.styles";
 import Countdown from "../../components/Countdown";
 import DetailBottom from "../../../assets/images/detailBottomAdd.svg";
 import ButtonList from "../../components/ButtonList";
 import CountdownControls from "../../components/CountdownControls";
 import { useKeepAwake } from "expo-keep-awake";
+import { Vibration, Platform } from "react-native";
 
 interface FocusProps {
     navigation: any;
@@ -18,13 +18,29 @@ interface FocusProps {
 const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
     useKeepAwake();
     const { title } = route.params;
-    const [amountMinutes, setAmountMinutes] = useState(10);
+    const [amountMinutes, setAmountMinutes] = useState(0.1);
     const [isPlaying, setIsPlaying] = useState(false);
 
     const setPlaying = (value: boolean) => setIsPlaying(value);
     const setMinutes = (min: number) => {
         setIsPlaying(false);
         setAmountMinutes(min);
+    };
+
+    const vibrate = () => {
+        if (Platform.OS === "ios") {
+            const interval = setInterval(() => Vibration.vibrate(), 1000);
+            setTimeout(() => clearInterval(interval), 10000);
+        } else {
+            Vibration.vibrate(10000);
+        }
+    };
+
+    const handleEnd = () => {
+        vibrate();
+        setMinutes(10);
+        setIsPlaying(false);
+        navigation.replace("Home");
     };
 
     return (
@@ -41,10 +57,15 @@ const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
             <ButtonList
                 currentSelected={amountMinutes}
                 handleSelected={setMinutes}
+                isPlaying={isPlaying}
             />
 
             <SmallText>Time</SmallText>
-            <Countdown isPaused={!isPlaying} minutes={amountMinutes} />
+            <Countdown
+                isPaused={!isPlaying}
+                minutes={amountMinutes}
+                onEnd={handleEnd}
+            />
 
             <CountdownControls isPlaying={isPlaying} handlePlay={setPlaying} />
 
