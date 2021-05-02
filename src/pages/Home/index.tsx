@@ -1,22 +1,22 @@
 import React from "react";
 import AddFocus from "../../components/AddFocus";
-import {
-    DetailBottomWrapper,
-    DetailTopWrapper,
-    HomeTitle,
-    Wrapper,
-} from "./Home.styles";
+// prettier-ignore
+import { DetailBottomWrapper, DetailTopWrapper, HomeTitle, Wrapper} from "./Home.styles";
 import TopDetail from "../../../assets/images/detailTop.svg";
 import DetailBottom from "../../../assets/images/detailBottom.svg";
 
-const Home: React.FC = ({}) => {
+interface HomeProps {
+    navigation: any;
+}
+
+const Home: React.FC<HomeProps> = ({ navigation }) => {
     return (
         <Wrapper>
             <DetailTopWrapper>
                 <TopDetail />
             </DetailTopWrapper>
             <HomeTitle>What would you like to focus on?</HomeTitle>
-            <AddFocus />
+            <AddFocus navigation={navigation} />
             <DetailBottomWrapper>
                 <DetailBottom />
             </DetailBottomWrapper>

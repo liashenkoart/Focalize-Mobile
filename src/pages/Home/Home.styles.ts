@@ -2,13 +2,14 @@ import styled from "styled-components/native";
 
 export const Wrapper = styled.View`
     flex: 1;
-    padding: 100px 40px;
+    padding: 80px 30px;
 `;
 
 export const HomeTitle = styled.Text`
     font-family: "Lemon";
     font-size: 25px;
     font-weight: 700;
+    width: 90%;
 `;
 
 export const DetailTopWrapper = styled.View`

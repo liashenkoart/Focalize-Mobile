@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
 import { bg } from "./utils/colors";
+import Focus from "./pages/Focus";
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const Navigation: React.FC = ({}) => {
                         }}
                     >
                         <Stack.Screen name="Home" component={Home} />
+                        <Stack.Screen name="Focus" component={Focus} />
                     </Stack.Navigator>
                 </NavigationContainer>
             </SafeAreaProvider>
