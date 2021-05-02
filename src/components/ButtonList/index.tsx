@@ -16,18 +16,22 @@ const ButtonList: React.FC<ButtonListProps> = ({
     isPlaying,
 }) => {
     const handleClick = (amount: number) => {
-        Alert.alert(
-            "Your timer is running",
-            "Are you sure you want to change the amount of time? The timer will restart",
-            [
-                {
-                    text: "Cancel",
-                    onPress: () => console.log("Cancel Pressed"),
-                    style: "cancel",
-                },
-                { text: "OK", onPress: () => handleSelected(amount) },
-            ]
-        );
+        if (isPlaying) {
+            Alert.alert(
+                "Your timer is running",
+                "Are you sure you want to change the amount of time? The timer will restart",
+                [
+                    {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel",
+                    },
+                    { text: "OK", onPress: () => handleSelected(amount) },
+                ]
+            );
+        } else {
+            handleSelected(amount);
+        }
     };
 
     return (

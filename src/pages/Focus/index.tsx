@@ -9,6 +9,7 @@ import ButtonList from "../../components/ButtonList";
 import CountdownControls from "../../components/CountdownControls";
 import { useKeepAwake } from "expo-keep-awake";
 import { Vibration, Platform } from "react-native";
+import { Alert } from "react-native";
 
 interface FocusProps {
     navigation: any;
@@ -17,7 +18,7 @@ interface FocusProps {
 
 const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
     useKeepAwake();
-    const { title } = route.params;
+    const { focus } = route.params;
     const [amountMinutes, setAmountMinutes] = useState(0.1);
     const [isPlaying, setIsPlaying] = useState(false);
 
@@ -43,14 +44,33 @@ const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
         navigation.replace("Home");
     };
 
+    const handleBack = () => {
+        if (isPlaying) {
+            Alert.alert(
+                "Your timer is running",
+                "Are you sure you want to go back? The timer will be paused",
+                [
+                    {
+                        text: "Cancel",
+                        onPress: () => console.log("Cancel Pressed"),
+                        style: "cancel",
+                    },
+                    { text: "OK", onPress: () => navigation.goBack() },
+                ]
+            );
+        } else {
+            navigation.goBack();
+        }
+    };
+
     return (
         <Wrapper>
-            <Back onPress={() => navigation.goBack()}>
+            <Back onPress={handleBack}>
                 <EvilIcons name="chevron-left" size={35} color="black" />
             </Back>
             <FocusTitleWrapper>
                 <FocusSubTitle>Focusing on</FocusSubTitle>
-                <FocusTitle>{title}</FocusTitle>
+                <FocusTitle>{focus.title}</FocusTitle>
             </FocusTitleWrapper>
 
             <SmallText>Select the amount of time</SmallText>
@@ -67,7 +87,11 @@ const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
                 onEnd={handleEnd}
             />
 
-            <CountdownControls isPlaying={isPlaying} handlePlay={setPlaying} />
+            <CountdownControls
+                isPlaying={isPlaying}
+                handlePlay={setPlaying}
+                navigation={navigation}
+            />
 
             <DetialBottomFocus>
                 <DetailBottom />
