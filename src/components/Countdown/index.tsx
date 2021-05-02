@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { formatTime, minutesToMillis } from "../../utils/functions";
+import { formatTime, minutesToMillis, timerColor } from "../../utils/functions";
 import CustomText from "../CustomText";
 import { CountdownWrapper, CountdowtTex } from "./Countdown.styles";
 
@@ -33,7 +33,13 @@ const Countdown: React.FC<CountdownProps> = ({
     };
 
     useEffect(() => {
+        setMillis(minutesToMillis(minutes));
+        setFill(100);
+    }, [minutes]);
+
+    useEffect(() => {
         if (isPaused) {
+            if (interval.current) clearInterval(interval.current);
             return;
         }
         interval.current = setInterval(countdown, 1000);
@@ -47,7 +53,7 @@ const Countdown: React.FC<CountdownProps> = ({
                 width={7}
                 rotation={1}
                 fill={fill}
-                tintColor="#FF7900"
+                tintColor={timerColor(minutes)}
                 backgroundColor="#3d5875"
             >
                 {(fill) => (

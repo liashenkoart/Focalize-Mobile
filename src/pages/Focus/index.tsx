@@ -8,6 +8,7 @@ import Countdown from "../../components/Countdown";
 import DetailBottom from "../../../assets/images/detailBottomAdd.svg";
 import ButtonList from "../../components/ButtonList";
 import CountdownControls from "../../components/CountdownControls";
+import { useKeepAwake } from "expo-keep-awake";
 
 interface FocusProps {
     navigation: any;
@@ -15,11 +16,16 @@ interface FocusProps {
 }
 
 const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
+    useKeepAwake();
     const { title } = route.params;
-    const [amountMinutes, setAmountMinutes] = useState(20);
+    const [amountMinutes, setAmountMinutes] = useState(10);
     const [isPlaying, setIsPlaying] = useState(false);
 
     const setPlaying = (value: boolean) => setIsPlaying(value);
+    const setMinutes = (min: number) => {
+        setIsPlaying(false);
+        setAmountMinutes(min);
+    };
 
     return (
         <Wrapper>
@@ -32,16 +38,15 @@ const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
             </FocusTitleWrapper>
 
             <SmallText>Select the amount of time</SmallText>
-            <ButtonList />
+            <ButtonList
+                currentSelected={amountMinutes}
+                handleSelected={setMinutes}
+            />
 
             <SmallText>Time</SmallText>
             <Countdown isPaused={!isPlaying} minutes={amountMinutes} />
 
-            <CountdownControls
-                isPlaying={isPlaying}
-                // @ts-ignore
-                handlePlay={setPlaying}
-            />
+            <CountdownControls isPlaying={isPlaying} handlePlay={setPlaying} />
 
             <DetialBottomFocus>
                 <DetailBottom />

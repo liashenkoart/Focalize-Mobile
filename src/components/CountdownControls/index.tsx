@@ -8,7 +8,7 @@ import { AntDesign } from "@expo/vector-icons";
 
 interface CountdownControlsProps {
     isPlaying: boolean;
-    handlePlay: (val: boolean) => {};
+    handlePlay: (val: boolean) => any;
 }
 
 const CountdownControls: React.FC<CountdownControlsProps> = ({
