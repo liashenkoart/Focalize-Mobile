@@ -36,3 +36,11 @@ export const SmallText = styled.Text`
     color: rgba(167, 167, 167, 1);
     margin: 10px 0;
 `;
+
+export const DetialBottomFocus = styled.View`
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+`;

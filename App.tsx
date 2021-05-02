@@ -1,6 +1,5 @@
 import * as Font from "expo-font";
 import React, { useEffect, useState } from "react";
-import { Text } from "react-native";
 import Navigation from "./src/navigation";
 
 export default function App() {

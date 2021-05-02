@@ -33,9 +33,12 @@ const Countdown: React.FC<CountdownProps> = ({
     };
 
     useEffect(() => {
+        if (isPaused) {
+            return;
+        }
         interval.current = setInterval(countdown, 1000);
         return () => clearInterval(interval.current);
-    }, []);
+    }, [isPaused]);
 
     return (
         <CountdownWrapper>
