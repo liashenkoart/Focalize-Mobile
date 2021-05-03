@@ -1,23 +1,20 @@
-import * as Font from "expo-font";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navigation from "./src/navigation";
+import { Inter_900Black } from "@expo-google-fonts/inter";
+import { View, Text } from "react-native";
+import { useFonts } from "expo-font";
 
 export default function App() {
-    const [fontLoaded, setFontLoaded] = useState(false);
-    const loadFonts = async () => {
-        await Font.loadAsync({
-            Lemon: require("./assets/fonts/Lemon.ttf"),
-        });
+    let [fontsLoaded] = useFonts({
+        Inter_900Black,
+    });
 
-        setFontLoaded(true);
-    };
-
-    useEffect(() => {
-        loadFonts();
-    }, []);
-
-    if (!fontLoaded) {
-        return null;
+    if (!fontsLoaded) {
+        return (
+            <View>
+                <Text>Loading....</Text>
+            </View>
+        );
     }
 
     return <Navigation />;

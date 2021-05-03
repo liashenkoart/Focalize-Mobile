@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AddButton, AddInput, AddWrapper } from "./AddFocus.styles";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-community/async-storage";
 import uuid from "react-native-uuid";
 import { status } from "../../utils/functions";
+import { useRoute } from "@react-navigation/native";
 
 export interface newFocusProps {
     id: string | number[];
@@ -18,7 +18,13 @@ interface AddFocusProps {
 }
 
 const AddFocus: React.FC<AddFocusProps> = ({ navigation, handleAddParent }) => {
+    const router = useRoute();
     const [newFocus, setNewFocus] = useState("");
+
+    useEffect(() => {
+        setNewFocus("");
+    }, [router.name]);
+
     const handleAdd = async () => {
         if (!newFocus || newFocus === "") return null;
 
@@ -38,6 +44,7 @@ const AddFocus: React.FC<AddFocusProps> = ({ navigation, handleAddParent }) => {
             <AddInput
                 placeholder="E.g code an app"
                 onChange={(e) => setNewFocus(e.nativeEvent.text)}
+                onSubmitEditing={handleAdd}
             />
             <AddButton onPress={handleAdd}>
                 <Ionicons name="add" size={30} color="black" />

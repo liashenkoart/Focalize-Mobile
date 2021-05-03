@@ -19,7 +19,7 @@ interface FocusProps {
 const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
     useKeepAwake();
     const { focus } = route.params;
-    const [amountMinutes, setAmountMinutes] = useState(0.1);
+    const [amountMinutes, setAmountMinutes] = useState(focus.timeRemaing);
     const [isPlaying, setIsPlaying] = useState(false);
 
     const setPlaying = (value: boolean) => setIsPlaying(value);
@@ -37,11 +37,8 @@ const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
         }
     };
 
-    const handleEnd = () => {
+    const handleEnd = async () => {
         vibrate();
-        setMinutes(10);
-        setIsPlaying(false);
-        navigation.replace("Home");
     };
 
     const handleBack = () => {
@@ -84,7 +81,9 @@ const Focus: React.FC<FocusProps> = ({ route, navigation }) => {
             <Countdown
                 isPaused={!isPlaying}
                 minutes={amountMinutes}
-                onEnd={handleEnd}
+                onEnd={() => handleEnd()}
+                navigation={navigation}
+                focusID={focus.id}
             />
 
             <CountdownControls

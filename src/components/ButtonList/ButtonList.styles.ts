@@ -1,7 +1,8 @@
-import styled, { css } from "styled-components/native";
+import styled from "styled-components/native";
 
 export const ButtonListWrapper = styled.View`
     padding: 4px 0 22px 0;
+    width: 100%;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;

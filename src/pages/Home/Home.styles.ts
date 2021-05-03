@@ -3,13 +3,16 @@ import styled from "styled-components/native";
 export const Wrapper = styled.View`
     flex: 1;
     padding: 80px 30px;
+    align-items: center;
+    justify-content: center;
 `;
 
 export const HomeTitle = styled.Text`
-    font-family: "Lemon";
-    font-size: 25px;
-    font-weight: 700;
-    width: 90%;
+    font-family: "Inter_900Black";
+    font-size: 65px;
+    line-height: 70px;
+    width: 100%;
+    text-align: left;
 `;
 
 export const DetailTopWrapper = styled.View`
