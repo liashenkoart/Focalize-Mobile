@@ -30,9 +30,6 @@ const Countdown: React.FC<CountdownProps> = ({
         setMillis((time) => {
             if (time === 0) {
                 clearInterval(interval.current);
-                onEnd();
-                handleEnd();
-                navigation.replace("Home");
                 return time;
             }
 
@@ -42,28 +39,12 @@ const Countdown: React.FC<CountdownProps> = ({
         });
     };
 
-    const handleEnd = async () => {
-        try {
-            const history = await AsyncStorage.getItem("focus");
-            if (history && JSON.parse(history).length) {
-                const allFocus = JSON.parse(history).filter(
-                    (h: any) => h.id !== focusID
-                );
-                const singleFocus = JSON.parse(history).filter(
-                    (h: any) => h.id === focusID
-                );
-                singleFocus.forEach((element: any) => {
-                    element.status = 1;
-                });
-                const editedFocus = [...allFocus, singleFocus[0]];
-                AsyncStorage.setItem("focus", JSON.stringify(editedFocus));
-
-                navigation.replace("Home");
-            }
-        } catch (e) {
-            console.log(e);
+    useEffect(() => {
+        if (millis === 0) {
+            onEnd();
+            navigation.replace("Home");
         }
-    };
+    }, [millis]);
 
     useEffect(() => {
         setMillis(minutesToMillis(minutes));
